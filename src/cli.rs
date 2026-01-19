@@ -91,7 +91,6 @@ impl Cli {
 				// Create example docs
 				let example_content = r#"---
 title: Welcome to Rum
-version: latest
 tags: [getting-started]
 ---
 
@@ -111,8 +110,19 @@ Use shortcodes for special content:
 This is a note block!
 {{/note}}
 "#;
-				fs::write(docs_dir.join("latest").join("index.md"), example_content)?;
+				fs::write(docs_dir.join("index.md"), example_content)?;
 
+				let latest_content = r#"---
+title: Latest Version
+version: latest
+tags: [docs]
+---
+
+# Documentation for Latest Version
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+"#;
+				fs::write(docs_dir.join("latest").join("index.md"), latest_content)?;
 				let config = Config::default();
 				config.save(&dir.join("rum.toml"))?;
 

@@ -49,21 +49,21 @@ impl DevServer {
 		gen.build("html").await?;
 		*self.generator.write().await = Some(gen);
 
-        // Get a handle to the current tokio runtime to use inside the watcher thread
-        let rt = tokio::runtime::Handle::current();
+		// Get a handle to the current tokio runtime to use inside the watcher thread
+		let rt = tokio::runtime::Handle::current();
 
 		let mut watcher = notify::recommended_watcher({
 			let _source_dir = self.source_dir.clone();
 			let generator = Arc::clone(&self.generator);
 			let _output_dir = output_dir.clone();
-            let rt = rt.clone();
+			let rt = rt.clone();
 
 			move |event: Result<notify::Event, notify::Error>| {
 				if let Ok(event) = event {
 					if event.kind.is_modify() || event.kind.is_create() || event.kind.is_remove() {
 						let generator = Arc::clone(&generator);
 
-					    rt.spawn(async move {
+						rt.spawn(async move {
 							if let Some(gen) = generator.write().await.take() {
 								let g = gen;
 								if let Err(e) = g.build("html").await {
@@ -111,7 +111,6 @@ impl DevServer {
 async fn serve_index() -> impl IntoResponse {
 	let output_dir = std::env::temp_dir().join("rum");
 	let index_path = output_dir.join("index.html");
-    println!("Serving index from: {:?}", index_path);
 
 	if index_path.exists() {
 		match tokio::fs::read_to_string(&index_path).await {
@@ -125,9 +124,7 @@ async fn serve_index() -> impl IntoResponse {
 
 async fn serve_page(AxumPath(path): AxumPath<String>) -> impl IntoResponse {
 	let output_dir = std::env::temp_dir().join("rum");
-    println!("Serving page: {}", path);
 	let page_path = output_dir.join(&path);
-    println!("Resolved page path: {:?}", page_path);
 
 	if page_path.exists() && page_path.is_file() {
 		match tokio::fs::read_to_string(&page_path).await {

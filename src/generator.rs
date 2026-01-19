@@ -227,7 +227,7 @@ impl Generator {
 			};
 			fs::create_dir_all(&version_path)?;
 
-            /*
+			/*
 			// Generate index page - use a doc named index.md or first doc
 			let index_doc = docs
 				.iter()
@@ -245,21 +245,23 @@ impl Generator {
 
 			// Generate individual pages
 			for doc in docs {
-                /*
+				/*
 				// Skip index.md as we already generated it
 				if doc.relative_path.file_stem().and_then(|s| s.to_str()) == Some("index") {
 					continue;
 				}
-                */
+				*/
 
-                let stripped_path = if let Some(v) = version {
-                    doc.relative_path.strip_prefix(v).unwrap_or(&doc.relative_path)
-                } else {
-                    &doc.relative_path
-                };
+				let stripped_path = if let Some(v) = version {
+					doc.relative_path
+						.strip_prefix(v)
+						.unwrap_or(&doc.relative_path)
+				} else {
+					&doc.relative_path
+				};
 
-/* 				let html_path = version_path.join(doc.relative_path.with_extension("html")); */
-                let html_path = version_path.join(stripped_path.with_extension("html"));
+				/* 				let html_path = version_path.join(doc.relative_path.with_extension("html")); */
+				let html_path = version_path.join(stripped_path.with_extension("html"));
 
 				// Create parent directories
 				if let Some(parent) = html_path.parent() {
