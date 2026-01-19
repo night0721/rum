@@ -1,0 +1,7 @@
+# Rum output
+dist/
+*.pdf
+
+# Rust
+target/
+Cargo.lock

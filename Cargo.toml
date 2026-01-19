@@ -1,0 +1,39 @@
+[package]
+name = "rum"
+version = "0.0.1"
+edition = "2021"
+authors = ["night0721"]
+description = "A next-gen static documentation/wiki generator"
+license = "MIT"
+
+[[bin]]
+name = "rum"
+path = "src/main.rs"
+
+[dependencies]
+# CLI and argument parsing
+clap = { version = "4.5", features = ["derive"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.9"
+serde_json = "1.0"
+toml = "0.9"
+
+# Markdown processing
+pulldown-cmark = { version = "0.13.0", features = ["html"] }
+regex = "1.10"
+
+# File system and path handling
+walkdir = "2.4"
+
+# HTTP server for dev mode
+axum = "0.8"
+tokio = { version = "1.35", features = ["full"] }
+tower = "0.5"
+tower-http = { version = "0.6", features = ["fs", "trace"] }
+notify = "8.2"
+
+# PDF generation
+headless_chrome = "1.0"
+
+# Utilities
+anyhow = "1.0"
